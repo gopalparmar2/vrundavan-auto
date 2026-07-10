@@ -1,0 +1,77 @@
+import React, { useState, useEffect } from 'react';
+import { Link, usePage, router } from '@inertiajs/react';
+import Navigation from '@/Layouts/Navigation';
+
+export default function AuthenticatedLayout({ children }) {
+    const { auth, flash } = usePage().props;
+
+    
+    // Toast notifications state
+    const [toast, setToast] = useState(null);
+
+    useEffect(() => {
+        if (flash.success) {
+            setToast({ type: 'success', message: flash.success });
+        } else if (flash.error) {
+            setToast({ type: 'error', message: flash.error });
+        } else if (flash.info) {
+            setToast({ type: 'info', message: flash.info });
+        }
+    }, [flash]);
+
+    useEffect(() => {
+        if (toast) {
+            const timer = setTimeout(() => setToast(null), 4000);
+            return () => clearTimeout(timer);
+        }
+    }, [toast]);
+
+    return (
+        <div className="w-full max-w-md h-[100dvh] bg-slate-50 relative flex flex-col shadow-2xl border-x border-slate-200/40 overflow-hidden">
+            {/* Compact Top App Bar */}
+            <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 safe-header flex justify-between items-center">
+                <div className="flex items-center space-x-2">
+                    {/* Brand Icon/Logo */}
+                    <Link href="/dashboard" className="flex items-center space-x-2">
+                        <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-extrabold text-sm shadow-md shadow-indigo-200">
+                            V
+                        </div>
+                        <span className="font-bold text-slate-800 text-base tracking-tight">VeloDrive</span>
+                    </Link>
+                </div>
+            </header>
+
+            {/* Success/Info/Error Toasts */}
+            {toast && (
+                <div className="fixed safe-toast left-1/2 -translate-x-1/2 w-11/12 max-w-[380px] z-50 transition-all duration-300 transform translate-y-0">
+                    {toast.type === 'success' && (
+                        <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl shadow-lg flex items-center space-x-3">
+                            <span className="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-505 bg-emerald-500 text-white flex items-center justify-center font-bold text-xs text-center">✓</span>
+                            <span className="text-xs font-medium">{toast.message}</span>
+                        </div>
+                    )}
+                    {toast.type === 'error' && (
+                        <div className="bg-rose-50 border border-rose-200 text-rose-800 px-4 py-3 rounded-xl shadow-lg flex items-center space-x-3">
+                            <span className="flex-shrink-0 w-5 h-5 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold text-xs text-center">!</span>
+                            <span className="text-xs font-medium">{toast.message}</span>
+                        </div>
+                    )}
+                    {toast.type === 'info' && (
+                        <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-xl shadow-lg flex items-center space-x-3">
+                            <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-xs text-center">i</span>
+                            <span className="text-xs font-medium">{toast.message}</span>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Main Scrollable App Content */}
+            <main className="flex-grow px-4 pt-4 pb-28 overflow-y-auto">
+                {children}
+            </main>
+
+            {/* Mobile Bottom Navigation Tab Bar */}
+            <Navigation />
+        </div>
+    );
+}

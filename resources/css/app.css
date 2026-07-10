@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.safe-header {
+    padding-top: calc(0.75rem + env(safe-area-inset-top, 0px));
+    padding-bottom: 0.75rem;
+}
+
+.safe-nav {
+    padding-top: 0.25rem;
+    padding-bottom: calc(0.25rem + env(safe-area-inset-bottom, 0px));
+}
+
+.safe-pb-wrapper {
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
+}
+
+.safe-toast {
+    top: calc(4rem + env(safe-area-inset-top, 0px));
+}
+
+.safe-guest-wrapper {
+    padding-top: calc(3rem + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(3rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* Hide scrollbars globally on all elements while maintaining scrolling functionality */
+* {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera */
+}
