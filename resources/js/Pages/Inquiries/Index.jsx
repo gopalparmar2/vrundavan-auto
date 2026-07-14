@@ -6,6 +6,7 @@ import { Input } from '@/Components/ui/input';
 import { Select } from '@/Components/ui/select';
 import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
+import { DatePicker } from '@/Components/ui/datepicker';
 import { Plus, Search, SlidersHorizontal, Inbox } from 'lucide-react';
 
 export default function Index({ inquiries, brands, search: initialSearch, status: initialStatus, brandId: initialBrandId, dateFrom: initialDateFrom, dateTo: initialDateTo }) {
@@ -42,12 +43,12 @@ export default function Index({ inquiries, brands, search: initialSearch, status
     };
 
     const statusColors = {
-        'New': 'bg-blue-50 text-blue-700 border-blue-100',
-        'Contacted': 'bg-indigo-50 text-indigo-700 border-indigo-100',
-        'Estimate Sent': 'bg-amber-50 text-amber-700 border-amber-100',
-        'Negotiation': 'bg-purple-50 text-purple-700 border-purple-100',
-        'Converted': 'bg-emerald-50 text-emerald-700 border-emerald-100',
-        'Lost': 'bg-rose-50 text-rose-700 border-rose-100',
+        'New': 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border-blue-100 dark:border-blue-900/30',
+        'Contacted': 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border-indigo-100 dark:border-indigo-900/30',
+        'Estimate Sent': 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border-amber-100 dark:border-amber-900/30',
+        'Negotiation': 'bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 border-purple-100 dark:border-purple-900/30',
+        'Converted': 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/30',
+        'Lost': 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-100 dark:border-rose-900/30',
     };
 
     const timeAgo = (dateStr) => {
@@ -71,12 +72,12 @@ export default function Index({ inquiries, brands, search: initialSearch, status
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h2 className="text-2xl font-bold text-slate-800 tracking-tight">Inquiries</h2>
-                    <p className="text-xs text-slate-500 mt-0.5">Manage customer pipeline</p>
+                    <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">Inquiries</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Manage customer pipeline</p>
                 </div>
                 <Link 
                     href={route('inquiries.create')} 
-                    className="py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-md shadow-indigo-200 flex items-center space-x-1.5 transition-all active:scale-[0.98]"
+                    className="py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-md shadow-indigo-950/20 flex items-center space-x-1.5 transition-all active:scale-[0.98]"
                 >
                     <Plus className="w-4 h-4" />
                     <span>New Inquiry</span>
@@ -95,7 +96,7 @@ export default function Index({ inquiries, brands, search: initialSearch, status
                                 placeholder="Search customer, phone, email..." 
                                 className="pl-9 text-xs"
                             />
-                            <div className="absolute left-3 top-3.5 text-slate-400">
+                            <div className="absolute left-3 top-3.5 text-slate-500">
                                 <Search className="w-4 h-4" />
                             </div>
                         </div>
@@ -104,7 +105,7 @@ export default function Index({ inquiries, brands, search: initialSearch, status
                             onClick={() => setFiltersOpen(!filtersOpen)}
                             variant="outline"
                             size="icon"
-                            className="h-11 w-11 text-slate-500 bg-white"
+                            className="h-11 w-11 text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900/60"
                         >
                             <SlidersHorizontal className="w-4 h-4" />
                         </Button>
@@ -112,10 +113,10 @@ export default function Index({ inquiries, brands, search: initialSearch, status
 
                     {/* Filters Grid */}
                     {filtersOpen && (
-                        <div className="bg-white border border-slate-100 p-4 rounded-2xl shadow-inner space-y-3">
+                        <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 p-4 rounded-2xl shadow-inner space-y-3">
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <Label className="mb-1 text-[10px] text-slate-400">Status</Label>
+                                    <Label className="mb-1 text-[10px] text-slate-500 dark:text-slate-400">Status</Label>
                                     <Select 
                                         value={status} 
                                         onChange={(e) => setStatus(e.target.value)}
@@ -129,7 +130,7 @@ export default function Index({ inquiries, brands, search: initialSearch, status
                                 </div>
 
                                 <div>
-                                    <Label className="mb-1 text-[10px] text-slate-400">Brand</Label>
+                                    <Label className="mb-1 text-[10px] text-slate-500 dark:text-slate-400">Brand</Label>
                                     <Select 
                                         value={brandId} 
                                         onChange={(e) => setBrandId(e.target.value)}
@@ -145,21 +146,21 @@ export default function Index({ inquiries, brands, search: initialSearch, status
 
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <Label className="mb-1 text-[10px] text-slate-400">From Date</Label>
-                                    <Input 
-                                        type="date" 
+                                    <Label className="mb-1 text-[10px] text-slate-500 dark:text-slate-400">From Date</Label>
+                                    <DatePicker 
                                         value={dateFrom} 
                                         onChange={(e) => setDateFrom(e.target.value)}
+                                        placeholder="Select start date"
                                         className="text-xs h-10"
                                     />
                                 </div>
 
                                 <div>
-                                    <Label className="mb-1 text-[10px] text-slate-400">To Date</Label>
-                                    <Input 
-                                        type="date" 
+                                    <Label className="mb-1 text-[10px] text-slate-500 dark:text-slate-400">To Date</Label>
+                                    <DatePicker 
                                         value={dateTo} 
                                         onChange={(e) => setDateTo(e.target.value)}
+                                        placeholder="Select end date"
                                         className="text-xs h-10"
                                     />
                                 </div>
@@ -167,7 +168,7 @@ export default function Index({ inquiries, brands, search: initialSearch, status
 
                             <div className="flex space-x-2 pt-1.5">
                                 <Button type="submit" className="flex-grow h-10 text-xs">Apply Filters</Button>
-                                <Button type="button" onClick={handleReset} variant="outline" className="h-10 text-xs text-slate-500">Reset</Button>
+                                <Button type="button" onClick={handleReset} variant="outline" className="h-10 text-xs text-slate-500 dark:text-slate-400">Reset</Button>
                             </div>
                         </div>
                     )}
@@ -181,38 +182,38 @@ export default function Index({ inquiries, brands, search: initialSearch, status
                         <Link 
                             key={inquiry.id} 
                             href={route('inquiries.show', inquiry.id)} 
-                            className="block p-3.5 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md transition-all duration-150"
+                            className="block p-3.5 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-sm hover:shadow-md transition-all duration-150"
                         >
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <span className="text-xs font-bold text-slate-800 tracking-tight">{inquiry.customer_name}</span>
-                                    <span className="block text-[10px] text-slate-400 mt-0.5">{inquiry.phone}</span>
+                                    <span className="text-xs font-bold text-slate-800 dark:text-slate-100 tracking-tight">{inquiry.customer_name}</span>
+                                    <span className="block text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">{inquiry.phone}</span>
                                 </div>
 
-                                <span className={`text-[9px] font-semibold px-2 py-0.5 rounded-full border ${statusColors[inquiry.status] || 'bg-slate-50 text-slate-700 border-slate-100'} uppercase tracking-wider font-mono`}>
+                                <span className={`text-[9px] font-semibold px-2 py-0.5 rounded-full border ${statusColors[inquiry.status] || 'bg-slate-100 dark:bg-slate-900 text-slate-650 dark:text-slate-300 border-slate-200 dark:border-slate-800'} uppercase tracking-wider font-mono`}>
                                     {inquiry.status}
                                 </span>
                             </div>
 
-                            <div className="mt-3 pt-2.5 border-t border-slate-100/60 flex justify-between items-center">
+                            <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-850 flex justify-between items-center">
                                 <div className="flex items-center space-x-1.5">
-                                    <span className="text-[10px] font-semibold text-slate-500">{inquiry.brand?.name}</span>
-                                    <span className="text-slate-300 text-[10px]">•</span>
-                                    <span className="text-[10px] text-slate-600 font-medium">{inquiry.model?.name}</span>
-                                    <span className="text-slate-300 text-[10px]">•</span>
-                                    <span className="text-[9px] text-indigo-600 font-semibold uppercase bg-indigo-50 px-1 py-0.2 rounded-md">{inquiry.source}</span>
+                                    <span className="text-[10px] font-semibold text-slate-555 dark:text-slate-400">{inquiry.brand?.name}</span>
+                                    <span className="text-slate-350 dark:text-slate-600 text-[10px]">•</span>
+                                    <span className="text-[10px] text-slate-700 dark:text-slate-300 font-medium">{inquiry.model?.name}</span>
+                                    <span className="text-slate-350 dark:text-slate-600 text-[10px]">•</span>
+                                    <span className="text-[9px] text-indigo-650 dark:text-indigo-400 font-semibold uppercase bg-indigo-50 dark:bg-indigo-950/60 px-1 py-0.2 rounded-md">{inquiry.source}</span>
                                 </div>
-                                <span className="text-[9px] text-slate-400 font-medium">{timeAgo(inquiry.created_at)}</span>
+                                <span className="text-[9px] text-slate-450 dark:text-slate-500 font-medium">{timeAgo(inquiry.created_at)}</span>
                             </div>
                         </Link>
                     ))
                 ) : (
-                    <div className="text-center py-12 bg-white border border-slate-100 rounded-2xl shadow-sm">
-                        <div className="w-12 h-12 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center mx-auto mb-3">
+                    <div className="text-center py-12 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-sm">
+                        <div className="w-12 h-12 rounded-full bg-slate-50 dark:bg-slate-950/40 text-slate-500 flex items-center justify-center mx-auto mb-3">
                             <Inbox className="w-6 h-6" />
                         </div>
-                        <p className="text-xs text-slate-500 font-semibold">No inquiries found</p>
-                        <p className="text-[10px] text-slate-400 mt-0.5">Try adjusting filters or search query.</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">No inquiries found</p>
+                        <p className="text-[10px] text-slate-400 dark:text-slate-505 mt-0.5">Try adjusting filters or search query.</p>
                     </div>
                 )}
             </div>

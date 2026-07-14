@@ -15,64 +15,64 @@ export default function Navigation() {
     };
 
     return (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 max-w-[calc(100%-2rem)] w-[400px] z-50 bg-white/85 border border-slate-100/80 px-2.5 py-1.5 rounded-2xl flex justify-around items-center shadow-[0_12px_32px_rgba(99,102,241,0.12)] backdrop-blur-lg transition-all duration-300">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 max-w-[calc(100%-2rem)] w-[400px] z-50 bg-white/90 dark:bg-slate-950/85 border border-slate-200 dark:border-slate-800/80 px-2.5 py-1.5 rounded-2xl flex justify-around items-center shadow-xl shadow-black/10 dark:shadow-black/40 backdrop-blur-lg transition-all duration-300">
             {/* Home / Dashboard */}
             <Link 
                 href={route('dashboard')} 
-                className={`flex flex-col items-center justify-center py-1 px-3.5 rounded-xl transition-all duration-300 relative ${isActive('/dashboard') ? 'text-indigo-600 font-bold' : 'text-slate-400 hover:text-slate-600'}`}
+                className={`flex flex-col items-center justify-center py-1 px-3.5 rounded-xl transition-all duration-300 relative ${isActive('/dashboard') ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
             >
                 <Home className={`w-5 h-5 mb-0.5 transition-all duration-300 ${isActive('/dashboard') ? 'scale-110 -translate-y-0.5' : 'hover:scale-105'}`} />
                 <span className="text-[9px] font-medium tracking-wide uppercase">Home</span>
                 {isActive('/dashboard') && (
-                    <span className="absolute bottom-0 w-1 h-1 rounded-full bg-indigo-600 animate-pulse"></span>
+                    <span className="absolute bottom-0 w-1 h-1 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-pulse"></span>
                 )}
             </Link>
 
             {/* Brands */}
             <Link 
                 href={route('brands.index')} 
-                className={`flex flex-col items-center justify-center py-1 px-3.5 rounded-xl transition-all duration-300 relative ${isActive('/brands') ? 'text-indigo-600 font-bold' : 'text-slate-400 hover:text-slate-600'}`}
+                className={`flex flex-col items-center justify-center py-1 px-3.5 rounded-xl transition-all duration-300 relative ${isActive('/brands') ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
             >
                 <Layers className={`w-5 h-5 mb-0.5 transition-all duration-300 ${isActive('/brands') ? 'scale-110 -translate-y-0.5' : 'hover:scale-105'}`} />
                 <span className="text-[9px] font-medium tracking-wide uppercase">Brands</span>
                 {isActive('/brands') && (
-                    <span className="absolute bottom-0 w-1 h-1 rounded-full bg-indigo-600 animate-pulse"></span>
+                    <span className="absolute bottom-0 w-1 h-1 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-pulse"></span>
                 )}
             </Link>
 
             {/* Models */}
             <Link 
                 href={route('models.index')} 
-                className={`flex flex-col items-center justify-center py-1 px-3.5 rounded-xl transition-all duration-300 relative ${isActive('/models') ? 'text-indigo-600 font-bold' : 'text-slate-400 hover:text-slate-600'}`}
+                className={`flex flex-col items-center justify-center py-1 px-3.5 rounded-xl transition-all duration-300 relative ${isActive('/models') ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
             >
                 <Car className={`w-5 h-5 mb-0.5 transition-all duration-300 ${isActive('/models') ? 'scale-110 -translate-y-0.5' : 'hover:scale-105'}`} />
                 <span className="text-[9px] font-medium tracking-wide uppercase">Models</span>
                 {isActive('/models') && (
-                    <span className="absolute bottom-0 w-1 h-1 rounded-full bg-indigo-600 animate-pulse"></span>
+                    <span className="absolute bottom-0 w-1 h-1 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-pulse"></span>
                 )}
             </Link>
 
             {/* Inquiries */}
             <Link 
                 href={route('inquiries.index')} 
-                className={`flex flex-col items-center justify-center py-1 px-3.5 rounded-xl transition-all duration-300 relative ${isActive('/inquiries') ? 'text-indigo-600 font-bold' : 'text-slate-400 hover:text-slate-600'}`}
+                className={`flex flex-col items-center justify-center py-1 px-3.5 rounded-xl transition-all duration-300 relative ${isActive('/inquiries') ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
             >
                 <MessageSquare className={`w-5 h-5 mb-0.5 transition-all duration-300 ${isActive('/inquiries') ? 'scale-110 -translate-y-0.5' : 'hover:scale-105'}`} />
                 <span className="text-[9px] font-medium tracking-wide uppercase">Leads</span>
                 {isActive('/inquiries') && (
-                    <span className="absolute bottom-0 w-1 h-1 rounded-full bg-indigo-600 animate-pulse"></span>
+                    <span className="absolute bottom-0 w-1 h-1 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-pulse"></span>
                 )}
             </Link>
 
             {/* Settings */}
             <Link 
                 href={route('profile.edit')} 
-                className={`flex flex-col items-center justify-center py-1 px-3.5 rounded-xl transition-all duration-300 relative ${isActive('/profile') ? 'text-indigo-600 font-bold' : 'text-slate-400 hover:text-slate-600'}`}
+                className={`flex flex-col items-center justify-center py-1 px-3.5 rounded-xl transition-all duration-300 relative ${isActive('/profile') ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
             >
                 <Settings className={`w-5 h-5 mb-0.5 transition-all duration-300 ${isActive('/profile') ? 'scale-110 -translate-y-0.5' : 'hover:scale-105'}`} />
                 <span className="text-[9px] font-medium tracking-wide uppercase">Settings</span>
                 {isActive('/profile') && (
-                    <span className="absolute bottom-0 w-1 h-1 rounded-full bg-indigo-600 animate-pulse"></span>
+                    <span className="absolute bottom-0 w-1 h-1 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-pulse"></span>
                 )}
             </Link>
         </div>

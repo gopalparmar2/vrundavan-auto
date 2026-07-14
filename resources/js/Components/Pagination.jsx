@@ -20,7 +20,7 @@ export default function Pagination({ links }) {
                     return (
                         <span
                             key={index}
-                            className="px-3.5 py-2 text-xs text-slate-400 bg-slate-100 rounded-lg border border-slate-200/50 cursor-not-allowed select-none"
+                            className="px-3.5 py-2 text-xs text-slate-400 dark:text-slate-500 bg-slate-100/50 dark:bg-slate-950/20 rounded-lg border border-slate-200 dark:border-slate-800/50 cursor-not-allowed select-none"
                             dangerouslySetInnerHTML={{ __html: cleanLabel(link.label) }}
                         />
                     );
@@ -33,7 +33,7 @@ export default function Pagination({ links }) {
                         className={`px-3.5 py-2 text-xs rounded-lg border transition-all ${
                             link.active
                                 ? 'bg-indigo-600 border-indigo-600 text-white font-bold'
-                                : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                                : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60'
                         }`}
                         dangerouslySetInnerHTML={{ __html: cleanLabel(link.label) }}
                     />

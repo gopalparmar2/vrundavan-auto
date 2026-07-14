@@ -26,9 +26,9 @@ export default function Create({ inquiry }) {
     const totalPayable = Math.max(0, onRoadPrice - discount + accessories + insurance + rto);
 
     const formatCurrency = (value) => {
-        return new Intl.NumberFormat('en-US', {
+        return new Intl.NumberFormat('en-IN', {
             style: 'currency',
-            currency: 'USD',
+            currency: 'INR',
         }).format(value);
     };
 
@@ -48,13 +48,13 @@ export default function Create({ inquiry }) {
             <div className="mb-6 flex items-center space-x-3">
                 <Link 
                     href={route('inquiries.show', inquiry.id)} 
-                    className="p-2 rounded-xl bg-white border border-slate-100 shadow-sm text-slate-500 hover:text-slate-700 transition-colors flex items-center justify-center"
+                    className="p-2 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors flex items-center justify-center"
                 >
                     <ArrowLeft className="w-4 h-4" />
                 </Link>
                 <div>
-                    <h2 className="text-xl font-bold text-slate-800 tracking-tight">Generate Estimate</h2>
-                    <p className="text-xs text-slate-500 mt-0.5">For inquiry: {inquiry.customer_name}</p>
+                    <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">Generate Estimate</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">For inquiry: {inquiry.customer_name}</p>
                 </div>
             </div>
 
@@ -63,13 +63,13 @@ export default function Create({ inquiry }) {
                 <CardContent className="p-5">
                     
                     {/* Summary Info Box */}
-                    <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl mb-5 text-xs text-slate-600">
-                        <span className="block text-[10px] text-slate-400 font-semibold uppercase tracking-wider mb-2">Selected Car Specs</span>
-                        <div className="flex justify-between items-center mb-1 font-bold text-slate-800">
+                    <div className="p-4 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-850 rounded-xl mb-5 text-xs text-slate-500 dark:text-slate-400">
+                        <span className="block text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider mb-2">Selected Car Specs</span>
+                        <div className="flex justify-between items-center mb-1 font-bold text-slate-800 dark:text-slate-100">
                             <span>{inquiry.brand?.name} - {inquiry.model?.name}</span>
                             <span>{formatCurrency(onRoadPrice)}</span>
                         </div>
-                        <div className="flex justify-between text-slate-500">
+                        <div className="flex justify-between text-slate-500 dark:text-slate-400">
                             <span>Variant: {inquiry.model?.variant}</span>
                             <span>Fuel: {inquiry.model?.fuel_type} | {inquiry.model?.transmission}</span>
                         </div>
@@ -78,18 +78,18 @@ export default function Create({ inquiry }) {
                     <form onSubmit={submit} className="space-y-4">
                         {/* Base On-Road Price (Read Only) */}
                         <div>
-                            <Label>Base On-Road Price ($)</Label>
+                            <Label>Base On-Road Price (₹)</Label>
                             <Input 
                                 type="text" 
                                 readOnly 
                                 value={formatCurrency(onRoadPrice)}
-                                className="bg-slate-50/80 font-bold text-slate-700 cursor-default shadow-inner"
+                                className="bg-slate-50 dark:bg-slate-950/60 font-bold text-slate-600 dark:text-slate-350 cursor-default shadow-inner"
                             />
                         </div>
 
                         {/* Discount */}
                         <div>
-                            <Label htmlFor="discount">Discounts / Offers ($)</Label>
+                            <Label htmlFor="discount">Discounts / Offers (₹)</Label>
                             <Input 
                                 type="number" 
                                 step="0.01" 
@@ -104,7 +104,7 @@ export default function Create({ inquiry }) {
 
                         {/* Accessories */}
                         <div>
-                            <Label htmlFor="accessories_cost">Accessories Cost ($)</Label>
+                            <Label htmlFor="accessories_cost">Accessories Cost (₹)</Label>
                             <Input 
                                 type="number" 
                                 step="0.01" 
@@ -119,7 +119,7 @@ export default function Create({ inquiry }) {
 
                         {/* Insurance */}
                         <div>
-                            <Label htmlFor="insurance">Insurance Premium ($)</Label>
+                            <Label htmlFor="insurance">Insurance Premium (₹)</Label>
                             <Input 
                                 type="number" 
                                 step="0.01" 
@@ -134,7 +134,7 @@ export default function Create({ inquiry }) {
 
                         {/* RTO Charges */}
                         <div>
-                            <Label htmlFor="rto_charges">RTO / Registration Charges ($)</Label>
+                            <Label htmlFor="rto_charges">RTO / Registration Charges (₹)</Label>
                             <Input 
                                 type="number" 
                                 step="0.01" 
@@ -148,12 +148,12 @@ export default function Create({ inquiry }) {
                         </div>
 
                         {/* Real-Time Total Amount Display */}
-                        <div className="p-4 bg-indigo-50/50 border border-indigo-100 rounded-xl flex justify-between items-center shadow-sm">
+                        <div className="p-4 bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-100 dark:border-indigo-900/50 rounded-xl flex justify-between items-center shadow-sm">
                             <div>
-                                <span className="block text-[10px] text-indigo-500 font-semibold uppercase tracking-wider">Total Amount Payable</span>
-                                <span className="block text-[8px] text-slate-400 font-medium mt-0.5">Calculated in real-time</span>
+                                <span className="block text-[10px] text-indigo-650 dark:text-indigo-400 font-semibold uppercase tracking-wider">Total Amount Payable</span>
+                                <span className="block text-[8px] text-slate-400 dark:text-slate-500 font-medium mt-0.5">Calculated in real-time</span>
                             </div>
-                            <span className="text-xl font-black text-indigo-600">
+                            <span className="text-xl font-black text-indigo-650 dark:text-indigo-400">
                                 {formatCurrency(totalPayable)}
                             </span>
                         </div>

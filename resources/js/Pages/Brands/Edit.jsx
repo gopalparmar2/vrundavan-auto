@@ -33,13 +33,13 @@ export default function Edit({ brand }) {
             <div className="mb-6 flex items-center space-x-3">
                 <Link 
                     href={route('brands.index')} 
-                    className="p-2 rounded-xl bg-white border border-slate-100 shadow-sm text-slate-500 hover:text-slate-700 transition-colors flex items-center justify-center"
+                    className="p-2 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors flex items-center justify-center"
                 >
                     <ArrowLeft className="w-4 h-4" />
                 </Link>
                 <div>
-                    <h2 className="text-xl font-bold text-slate-800 tracking-tight">Edit Brand</h2>
-                    <p className="text-xs text-slate-500 mt-0.5">Modify brand details</p>
+                    <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">Edit Brand</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Modify brand details</p>
                 </div>
             </div>
 
@@ -54,6 +54,7 @@ export default function Edit({ brand }) {
                                 type="text" 
                                 id="name" 
                                 value={data.name}
+                                placeholder="e.g. Toyota"
                                 onChange={(e) => setData('name', e.target.value)}
                             />
                             {errors.name && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.name}</div>}
@@ -63,7 +64,7 @@ export default function Edit({ brand }) {
                         {brand.logo && (
                             <div>
                                 <Label>Current Logo</Label>
-                                <div className="w-20 h-20 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center p-2">
+                                <div className="w-20 h-20 rounded-xl bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 flex items-center justify-center p-2">
                                     <img src={`/storage/${brand.logo}`} alt={brand.name} className="object-contain max-h-full" />
                                 </div>
                             </div>
@@ -72,11 +73,11 @@ export default function Edit({ brand }) {
                         {/* Logo Upload */}
                         <div>
                             <Label>Replace Logo (Optional)</Label>
-                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-200 border-dashed rounded-xl hover:border-indigo-400 transition-colors relative">
+                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-200 dark:border-slate-800 border-dashed rounded-xl hover:border-indigo-500 transition-colors relative">
                                 <div className="space-y-1 text-center">
-                                    <Upload className="mx-auto h-8 w-8 text-slate-400" />
-                                    <div className="flex text-xs text-slate-600 justify-center">
-                                        <label htmlFor="logo" className="relative cursor-pointer rounded-md font-semibold text-indigo-600 hover:text-indigo-500 focus-within:outline-none">
+                                    <Upload className="mx-auto h-8 w-8 text-slate-400 dark:text-slate-500" />
+                                    <div className="flex text-xs text-slate-500 dark:text-slate-400 justify-center">
+                                        <label htmlFor="logo" className="relative cursor-pointer rounded-md font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 focus-within:outline-none">
                                             <span>{data.logo ? data.logo.name : 'Upload new logo'}</span>
                                             <input 
                                                 id="logo" 
@@ -86,7 +87,7 @@ export default function Edit({ brand }) {
                                             />
                                         </label>
                                     </div>
-                                    <p className="text-[10px] text-slate-400">PNG, JPG up to 2MB</p>
+                                    <p className="text-[10px] text-slate-400 dark:text-slate-555">PNG, JPG up to 2MB</p>
                                 </div>
                             </div>
                             {errors.logo && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.logo}</div>}

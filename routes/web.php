@@ -19,6 +19,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit-info', [ProfileController::class, 'editInfo'])->name('profile.edit-info');
     Route::get('/profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile/theme', [ProfileController::class, 'updateTheme'])->name('profile.theme.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Dashboard

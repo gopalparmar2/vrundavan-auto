@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-    Dialog as HeadlessDialog,
-    DialogPanel as HeadlessDialogPanel,
-    Transition,
-    TransitionChild,
-} from "@headlessui/react";
+import { Dialog as RadixDialog } from "radix-ui";
 import { cn } from "@/lib/utils";
 
 const Dialog = ({
@@ -14,8 +9,8 @@ const Dialog = ({
     closeable = true,
     onClose = () => {},
 }) => {
-    const close = () => {
-        if (closeable) {
+    const handleOpenChange = (open) => {
+        if (!open && closeable) {
             onClose();
         }
     };
@@ -29,45 +24,26 @@ const Dialog = ({
     }[maxWidth];
 
     return (
-        <Transition show={show} as={React.Fragment} leave="duration-200">
-            <HeadlessDialog
-                as="div"
-                id="modal"
-                className="fixed inset-0 z-50 flex transform items-center overflow-y-auto px-4 py-6 transition-all sm:px-0 justify-center"
-                onClose={close}
-            >
-                <TransitionChild
-                    as={React.Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-all" />
-                </TransitionChild>
-
-                <TransitionChild
-                    as={React.Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    enterTo="opacity-100 translate-y-0 sm:scale-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                    leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                >
-                    <HeadlessDialogPanel
+        <RadixDialog.Root open={show} onOpenChange={handleOpenChange}>
+            <RadixDialog.Portal>
+                {/* Translucent backdrop overlay */}
+                <RadixDialog.Overlay 
+                    className="fixed inset-0 z-50 bg-slate-950/60 transition-all duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" 
+                />
+                
+                {/* Centering wrapper */}
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                    <RadixDialog.Content
                         className={cn(
-                            "mb-6 transform overflow-hidden rounded-2xl bg-white border border-slate-200/80 p-0 shadow-xl transition-all sm:mx-auto sm:w-full dark:bg-slate-900 dark:border-slate-800",
+                            "relative z-50 w-full overflow-hidden rounded-2xl bg-white border border-slate-200/80 shadow-xl transition-all outline-none p-0 dark:bg-slate-950 dark:border-slate-800 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-top-[5%] data-[state=open]:slide-in-from-top-[5%] duration-200",
                             maxWidthClass
                         )}
                     >
                         {children}
-                    </HeadlessDialogPanel>
-                </TransitionChild>
-            </HeadlessDialog>
-        </Transition>
+                    </RadixDialog.Content>
+                </div>
+            </RadixDialog.Portal>
+        </RadixDialog.Root>
     );
 };
 Dialog.displayName = "Dialog";

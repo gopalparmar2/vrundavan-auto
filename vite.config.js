@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import { nativephpMobile, nativephpHotFile } from './vendor/nativephp/mobile/resources/js/vite-plugin.js';
 import path from 'path';
 import { networkInterfaces } from 'os';
@@ -33,6 +34,7 @@ export default defineConfig({
             hotFile: nativephpHotFile(),
         }),
         react(),
+        tailwindcss(),
         nativephpMobile(),
     ],
     resolve: {

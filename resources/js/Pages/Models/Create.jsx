@@ -37,13 +37,13 @@ export default function Create({ brands }) {
             <div className="mb-6 flex items-center space-x-3">
                 <Link 
                     href={route('models.index')} 
-                    className="p-2 rounded-xl bg-white border border-slate-100 shadow-sm text-slate-500 hover:text-slate-700 transition-colors flex items-center justify-center"
+                    className="p-2 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors flex items-center justify-center"
                 >
                     <ArrowLeft className="w-4 h-4" />
                 </Link>
                 <div>
-                    <h2 className="text-xl font-bold text-slate-800 tracking-tight">Add Model</h2>
-                    <p className="text-xs text-slate-500 mt-0.5">Register new vehicle model details</p>
+                    <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">Add Model</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Register new vehicle model details</p>
                 </div>
             </div>
 
@@ -95,7 +95,7 @@ export default function Create({ brands }) {
 
                         {/* On-Road Price */}
                         <div>
-                            <Label htmlFor="on_road_price" required>On-Road Price ($)</Label>
+                            <Label htmlFor="on_road_price" required>On-Road Price (₹)</Label>
                             <Input 
                                 type="number" 
                                 step="0.01" 
@@ -109,7 +109,7 @@ export default function Create({ brands }) {
 
                         {/* Ex-Showroom Price */}
                         <div>
-                            <Label htmlFor="ex_showroom_price">Ex-Showroom Price ($ - Optional)</Label>
+                            <Label htmlFor="ex_showroom_price">Ex-Showroom Price (₹ - Optional)</Label>
                             <Input 
                                 type="number" 
                                 step="0.01" 
@@ -155,11 +155,11 @@ export default function Create({ brands }) {
                         {/* Image Upload */}
                         <div>
                             <Label>Model Image (Optional)</Label>
-                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-200 border-dashed rounded-xl hover:border-indigo-400 transition-colors relative">
+                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-200 dark:border-slate-800 border-dashed rounded-xl hover:border-indigo-500 transition-colors relative">
                                 <div className="space-y-1 text-center">
-                                    <Upload className="mx-auto h-8 w-8 text-slate-400" />
-                                    <div className="flex text-xs text-slate-600 justify-center">
-                                        <label htmlFor="image" className="relative cursor-pointer rounded-md font-semibold text-indigo-600 hover:text-indigo-500 focus-within:outline-none">
+                                    <Upload className="mx-auto h-8 w-8 text-slate-400 dark:text-slate-500" />
+                                    <div className="flex text-xs text-slate-500 dark:text-slate-400 justify-center">
+                                        <label htmlFor="image" className="relative cursor-pointer rounded-md font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 focus-within:outline-none">
                                             <span>{data.image ? data.image.name : 'Upload image'}</span>
                                             <input 
                                                 id="image" 
@@ -169,7 +169,7 @@ export default function Create({ brands }) {
                                             />
                                         </label>
                                     </div>
-                                    <p className="text-[10px] text-slate-400">PNG, JPG up to 2MB</p>
+                                    <p className="text-[10px] text-slate-400 dark:text-slate-555">PNG, JPG up to 2MB</p>
                                 </div>
                             </div>
                             {errors.image && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.image}</div>}

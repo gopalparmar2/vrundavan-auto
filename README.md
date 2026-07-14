@@ -1,4 +1,4 @@
-# Vehicle Dealership Management Mobile App (VeloDrive)
+# Vehicle Dealership Management Mobile App (Vrundavan Auto)
 
 A high-fidelity mobile application built using **Laravel 12**, **Tailwind CSS v4**, **Alpine.js**, and packaged for native platform compilation (Android & iOS) via **NativePHP**. 
 

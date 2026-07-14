@@ -47,6 +47,7 @@ export default function ForgotPassword({ status }) {
                         value={data.email}
                         className="mt-1 block w-full"
                         autoFocus={true}
+                        placeholder="Enter your email address"
                         onChange={(e) => setData('email', e.target.value)}
                     />
                 </div>

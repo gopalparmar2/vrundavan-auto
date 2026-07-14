@@ -5,9 +5,19 @@ import Navigation from '@/Layouts/Navigation';
 export default function AuthenticatedLayout({ children }) {
     const { auth, flash } = usePage().props;
 
-    
+
     // Toast notifications state
     const [toast, setToast] = useState(null);
+
+    // Sync theme preference with document class list
+    useEffect(() => {
+        const theme = auth.user?.theme || 'dark';
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, [auth.user?.theme]);
 
     useEffect(() => {
         if (flash.success) {
@@ -27,16 +37,16 @@ export default function AuthenticatedLayout({ children }) {
     }, [toast]);
 
     return (
-        <div className="w-full max-w-md h-[100dvh] bg-slate-50 relative flex flex-col shadow-2xl border-x border-slate-200/40 overflow-hidden">
+        <div className="w-full max-w-md h-[100dvh] bg-slate-50 text-slate-800 dark:bg-gradient-to-tr dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 dark:text-white relative flex flex-col shadow-2xl border-x border-slate-200 dark:border-slate-950 overflow-hidden">
             {/* Compact Top App Bar */}
-            <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 safe-header flex justify-between items-center">
+            <header className="sticky top-0 z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200/60 dark:border-slate-900/60 px-4 safe-header flex justify-between items-center">
                 <div className="flex items-center space-x-2">
                     {/* Brand Icon/Logo */}
                     <Link href="/dashboard" className="flex items-center space-x-2">
-                        <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-extrabold text-sm shadow-md shadow-indigo-200">
+                        <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-extrabold text-sm shadow-md shadow-indigo-500/25">
                             V
                         </div>
-                        <span className="font-bold text-slate-800 text-base tracking-tight">VeloDrive</span>
+                        <span className="font-bold text-slate-800 dark:text-slate-100 text-base tracking-tight">Vrundavan Auto</span>
                     </Link>
                 </div>
             </header>

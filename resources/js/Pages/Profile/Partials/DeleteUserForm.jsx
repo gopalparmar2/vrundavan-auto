@@ -64,11 +64,11 @@ export default function DeleteUserForm({ trigger, className = '' }) {
                 {triggerElement}
                 <Dialog show={confirmingUserDeletion} onClose={closeModal}>
                     <form onSubmit={deleteUser} className="p-6 space-y-4">
-                        <h2 className="text-base font-bold text-slate-800">
+                        <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">
                             Are you sure you want to delete your account?
                         </h2>
 
-                        <p className="text-xs text-slate-500 leading-relaxed">
+                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                             Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
                         </p>
 
@@ -108,14 +108,14 @@ export default function DeleteUserForm({ trigger, className = '' }) {
     return (
         <section className={`space-y-6 ${className}`}>
             <header className="flex items-center space-x-2.5 mb-6">
-                <div className="p-2 rounded-xl bg-rose-50 text-rose-600">
+                <div className="p-2 rounded-xl bg-rose-50 dark:bg-rose-955/60 text-rose-600 dark:text-rose-455">
                     <UserX className="w-5 h-5" />
                 </div>
                 <div>
-                    <h2 className="text-base font-bold text-slate-800">
+                    <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">
                         Delete Account
                     </h2>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                         Permanently delete your account and all of its resources and data.
                     </p>
                 </div>
@@ -125,11 +125,11 @@ export default function DeleteUserForm({ trigger, className = '' }) {
 
             <Dialog show={confirmingUserDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6 space-y-4">
-                    <h2 className="text-base font-bold text-slate-800">
+                    <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">
                         Are you sure you want to delete your account?
                     </h2>
 
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                         Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
                     </p>
 

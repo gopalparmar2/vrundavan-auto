@@ -68,13 +68,13 @@ export default function Create({ brands }) {
             <div className="mb-6 flex items-center space-x-3">
                 <Link 
                     href={route('inquiries.index')} 
-                    className="p-2 rounded-xl bg-white border border-slate-100 shadow-sm text-slate-500 hover:text-slate-700 transition-colors flex items-center justify-center"
+                    className="p-2 rounded-xl bg-slate-900/60 border border-slate-800 shadow-sm text-slate-400 hover:text-slate-200 transition-colors flex items-center justify-center"
                 >
                     <ArrowLeft className="w-4 h-4" />
                 </Link>
                 <div>
-                    <h2 className="text-xl font-bold text-slate-800 tracking-tight">Create Inquiry</h2>
-                    <p className="text-xs text-slate-500 mt-0.5">Register a new customer lead</p>
+                    <h2 className="text-xl font-bold text-slate-100 tracking-tight">Create Inquiry</h2>
+                    <p className="text-xs text-slate-400 mt-0.5">Register a new customer lead</p>
                 </div>
             </div>
 

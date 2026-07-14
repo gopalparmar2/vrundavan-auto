@@ -41,6 +41,7 @@ export default function ResetPassword({ token, email }) {
                         value={data.email}
                         className="mt-1 block w-full"
                         autoComplete="username"
+                        placeholder="Enter your email address"
                         onChange={(e) => setData('email', e.target.value)}
                     />
 
@@ -58,6 +59,7 @@ export default function ResetPassword({ token, email }) {
                         className="mt-1 block w-full"
                         autoComplete="new-password"
                         autoFocus={true}
+                        placeholder="Enter your new password"
                         onChange={(e) => setData('password', e.target.value)}
                     />
 
@@ -79,6 +81,7 @@ export default function ResetPassword({ token, email }) {
                         value={data.password_confirmation}
                         className="mt-1 block w-full"
                         autoComplete="new-password"
+                        placeholder="Confirm your new password"
                         onChange={(e) =>
                             setData('password_confirmation', e.target.value)
                         }

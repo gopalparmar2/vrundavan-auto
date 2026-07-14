@@ -48,6 +48,7 @@ export default function Login({ status, canResetPassword }) {
                         className="mt-1 block w-full"
                         autoComplete="username"
                         autoFocus={true}
+                        placeholder="Enter your email address"
                         onChange={(e) => setData('email', e.target.value)}
                     />
 
@@ -64,6 +65,7 @@ export default function Login({ status, canResetPassword }) {
                         value={data.password}
                         className="mt-1 block w-full"
                         autoComplete="current-password"
+                        placeholder="Enter your password"
                         onChange={(e) => setData('password', e.target.value)}
                     />
 
@@ -75,8 +77,8 @@ export default function Login({ status, canResetPassword }) {
                         id="remember"
                         name="remember"
                         checked={data.remember}
-                        onChange={(e) =>
-                            setData('remember', e.target.checked)
+                        onCheckedChange={(checked) =>
+                            setData('remember', checked)
                         }
                     />
                     <Label htmlFor="remember" className="text-sm font-normal text-gray-600 dark:text-gray-400">

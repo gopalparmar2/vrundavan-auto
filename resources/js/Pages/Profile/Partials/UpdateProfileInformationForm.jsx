@@ -41,6 +41,7 @@ export default function UpdateProfileInformation({
                         onChange={(e) => setData('name', e.target.value)}
                         autoFocus
                         autoComplete="name"
+                        placeholder="Enter your name"
                     />
 
                     {errors.name && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.name}</div>}
@@ -55,6 +56,7 @@ export default function UpdateProfileInformation({
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
                         autoComplete="username"
+                        placeholder="Enter your email address"
                         disabled
                     />
 

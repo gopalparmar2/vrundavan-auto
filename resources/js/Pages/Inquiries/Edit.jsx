@@ -73,13 +73,13 @@ export default function Edit({ inquiry, brands, models: initialModels }) {
             <div className="mb-6 flex items-center space-x-3">
                 <Link 
                     href={route('inquiries.index')} 
-                    className="p-2 rounded-xl bg-white border border-slate-100 shadow-sm text-slate-500 hover:text-slate-700 transition-colors flex items-center justify-center"
+                    className="p-2 rounded-xl bg-slate-900/60 border border-slate-800 shadow-sm text-slate-400 hover:text-slate-200 transition-colors flex items-center justify-center"
                 >
                     <ArrowLeft className="w-4 h-4" />
                 </Link>
                 <div>
-                    <h2 className="text-xl font-bold text-slate-800 tracking-tight">Edit Inquiry</h2>
-                    <p className="text-xs text-slate-500 mt-0.5">Modify inquiry details</p>
+                    <h2 className="text-xl font-bold text-slate-100 tracking-tight">Edit Inquiry</h2>
+                    <p className="text-xs text-slate-400 mt-0.5">Modify inquiry details</p>
                 </div>
             </div>
 
@@ -94,6 +94,7 @@ export default function Edit({ inquiry, brands, models: initialModels }) {
                                 type="text" 
                                 id="customer_name" 
                                 value={data.customer_name}
+                                placeholder="e.g. John Doe"
                                 onChange={(e) => setData('customer_name', e.target.value)}
                             />
                             {errors.customer_name && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.customer_name}</div>}
@@ -106,6 +107,7 @@ export default function Edit({ inquiry, brands, models: initialModels }) {
                                 type="tel" 
                                 id="phone" 
                                 value={data.phone}
+                                placeholder="e.g. +1 555-0199"
                                 onChange={(e) => setData('phone', e.target.value)}
                             />
                             {errors.phone && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.phone}</div>}
@@ -118,6 +120,7 @@ export default function Edit({ inquiry, brands, models: initialModels }) {
                                 type="email" 
                                 id="email" 
                                 value={data.email}
+                                placeholder="e.g. john@example.com"
                                 onChange={(e) => setData('email', e.target.value)}
                             />
                             {errors.email && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.email}</div>}

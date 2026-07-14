@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function GuestLayout({ children }) {
     return (
-        <div className="w-full max-w-md min-h-[100dvh] bg-slate-50 relative flex flex-col justify-center px-6 safe-guest-wrapper shadow-2xl bg-gradient-to-tr from-slate-900 via-indigo-950 to-slate-900 text-white">
+        <div className="w-full max-w-md min-h-[100dvh] bg-slate-50 text-slate-800 dark:bg-gradient-to-tr dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 dark:text-white relative flex flex-col justify-center px-6 safe-guest-wrapper shadow-2xl">
             <div className="flex flex-col items-center mb-8">
                 {/* Large Logo */}
                 <Link href="/" className="flex flex-col items-center group">
@@ -11,12 +11,12 @@ export default function GuestLayout({ children }) {
                         V
                     </div>
                 </Link>
-                <h1 className="text-2xl font-bold tracking-tight">VeloDrive</h1>
-                <p className="text-xs text-slate-400 mt-1">Vehicle Dealership Management</p>
+                <h1 className="text-2xl font-bold tracking-tight">Vrundavan Auto</h1>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Vehicle Dealership Management</p>
             </div>
 
             {/* Form Card */}
-            <div className="w-full bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-6 shadow-xl text-white">
+            <div className="w-full bg-white dark:bg-white/10 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-2xl px-6 py-6 shadow-xl text-slate-800 dark:text-white">
                 {children}
             </div>
         </div>
