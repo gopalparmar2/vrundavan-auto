@@ -42,11 +42,11 @@ export default function Edit({ auth }) {
             </div>
 
             {/* Settings List */}
-            <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm divide-y divide-slate-100 dark:divide-slate-850/60 overflow-hidden">
+            <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
                 {/* 1. Update Profile */}
                 <Link
                     href={route('profile.edit-info')}
-                    className="flex items-center justify-between p-4 hover:bg-slate-55 dark:hover:bg-slate-850/40 transition-all group"
+                    className="flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-all group"
                 >
                     <div className="flex items-center space-x-3">
                         <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 transition-colors group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/50">
@@ -63,7 +63,7 @@ export default function Edit({ auth }) {
                 {/* 2. Change Password */}
                 <Link
                     href={route('profile.change-password')}
-                    className="flex items-center justify-between p-4 hover:bg-slate-55 dark:hover:bg-slate-850/40 transition-all group"
+                    className="flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-all group"
                 >
                     <div className="flex items-center space-x-3">
                         <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 transition-colors group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/50">
@@ -81,7 +81,7 @@ export default function Edit({ auth }) {
                 <Button
                     onClick={handleThemeToggle}
                     variant="ghost"
-                    className="w-full h-auto flex items-center justify-between p-4 hover:bg-slate-55 dark:hover:bg-slate-850/40 transition-all group text-left rounded-none font-normal text-slate-800 dark:text-slate-200"
+                    className="w-full h-auto flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-all group text-left rounded-none font-normal text-slate-800 dark:text-slate-200"
                 >
                     <div className="flex items-center space-x-3">
                         <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 transition-colors group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/50">
@@ -103,7 +103,7 @@ export default function Edit({ auth }) {
                 <Button
                     onClick={() => setShowLogoutModal(true)}
                     variant="ghost"
-                    className="w-full h-auto flex items-center justify-between p-4 hover:bg-slate-55 dark:hover:bg-slate-850/40 transition-all group text-left rounded-none font-normal text-slate-800 dark:text-slate-200"
+                    className="w-full h-auto flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-all group text-left rounded-none font-normal text-slate-800 dark:text-slate-200"
                 >
                     <div className="flex items-center space-x-3">
                         <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-955/60 text-amber-600 dark:text-amber-400 transition-colors group-hover:bg-amber-100 dark:group-hover:bg-amber-900/50">
@@ -122,7 +122,7 @@ export default function Edit({ auth }) {
                     trigger={
                         <Button
                             variant="ghost"
-                            className="w-full h-auto flex items-center justify-between p-4 hover:bg-rose-50 dark:hover:bg-rose-955/20 transition-all group text-left rounded-none font-normal"
+                            className="w-full h-auto flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-all group text-left rounded-none font-normal"
                         >
                             <div className="flex items-center space-x-3">
                                 <div className="p-2 rounded-xl bg-rose-50 dark:bg-rose-955/60 text-rose-600 dark:text-rose-455 transition-colors group-hover:bg-rose-100 dark:group-hover:bg-rose-900/50">

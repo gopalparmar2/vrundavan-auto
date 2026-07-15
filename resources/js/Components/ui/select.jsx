@@ -13,9 +13,10 @@ const Select = React.forwardRef(({ className, value, onChange, placeholder, disa
                 
                 // If it is an option element or has a value property
                 if (child.type === "option" || child.props?.value !== undefined) {
+                    const rawVal = child.props.value === undefined ? "" : String(child.props.value);
                     list.push({
-                        value: child.props.value === undefined ? "" : String(child.props.value),
-                        label: child.props.children || child.props.label || String(child.props.value),
+                        value: rawVal === "" ? "__EMPTY__" : rawVal,
+                        label: child.props.children || child.props.label || rawVal,
                     });
                 } else if (child.type === React.Fragment || child.props?.children) {
                     process(child.props.children);
@@ -26,19 +27,20 @@ const Select = React.forwardRef(({ className, value, onChange, placeholder, disa
         return list;
     }, [children]);
 
-    // Ensure value is treated as a string, defaulting to empty string if undefined/null
-    const radixValue = value !== undefined && value !== null ? String(value) : "";
+    // Ensure value is treated as a string, defaulting to "__EMPTY__" if empty/undefined/null
+    const radixValue = value !== undefined && value !== null && String(value) !== "" ? String(value) : "__EMPTY__";
     const currentOption = options.find((opt) => opt.value === radixValue);
-    const isPlaceholder = radixValue === "" || (currentOption && currentOption.value === "");
+    const isPlaceholder = radixValue === "__EMPTY__";
 
     const handleValueChange = (newValue) => {
         if (onChange) {
+            const actualValue = newValue === "__EMPTY__" ? "" : newValue;
             // Mimic standard HTML select event object structure
             onChange({
                 target: {
                     name: name || id,
                     id: id,
-                    value: newValue,
+                    value: actualValue,
                 },
             });
         }

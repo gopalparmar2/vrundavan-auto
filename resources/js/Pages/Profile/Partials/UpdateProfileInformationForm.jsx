@@ -48,7 +48,7 @@ export default function UpdateProfileInformation({
                 </div>
 
                 <div>
-                    <Label htmlFor="email" required>Email Address</Label>
+                    <Label htmlFor="email">Email Address</Label>
 
                     <Input
                         id="email"

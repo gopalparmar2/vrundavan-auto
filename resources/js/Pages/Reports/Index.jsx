@@ -8,7 +8,7 @@ import { Button, buttonVariants } from '@/Components/ui/button';
 import { FileSpreadsheet, FileDown } from 'lucide-react';
 
 export default function Index({ data, brands, models, year, brandId, modelId }) {
-    
+
     const handleFilterChange = (field, value) => {
         const filters = {
             year: field === 'year' ? value : year,
@@ -24,7 +24,7 @@ export default function Index({ data, brands, models, year, brandId, modelId }) 
     };
 
     const formatCurrency = (val) => {
-        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
+        return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(val);
     };
 
     const formatPercent = (val) => {
@@ -58,7 +58,7 @@ export default function Index({ data, brands, models, year, brandId, modelId }) 
                     <div className="grid grid-cols-3 gap-2">
                         <div>
                             <Label className="block text-[9px] font-semibold text-slate-550 dark:text-slate-500 uppercase tracking-wider mb-1">Year</Label>
-                            <Select 
+                            <Select
                                 value={year}
                                 onChange={(e) => handleFilterChange('year', e.target.value)}
                                 className="h-9 text-xs"
@@ -78,7 +78,7 @@ export default function Index({ data, brands, models, year, brandId, modelId }) 
 
                         <div>
                             <Label className="block text-[9px] font-semibold text-slate-550 dark:text-slate-500 uppercase tracking-wider mb-1">Brand</Label>
-                            <Select 
+                            <Select
                                 value={brandId || ''}
                                 onChange={(e) => handleFilterChange('brand_id', e.target.value)}
                                 className="h-9 text-xs"
@@ -92,7 +92,7 @@ export default function Index({ data, brands, models, year, brandId, modelId }) 
 
                         <div>
                             <Label className="block text-[9px] font-semibold text-slate-550 dark:text-slate-500 uppercase tracking-wider mb-1">Model</Label>
-                            <Select 
+                            <Select
                                 value={modelId || ''}
                                 onChange={(e) => handleFilterChange('model_id', e.target.value)}
                                 disabled={!models || models.length === 0}
@@ -110,15 +110,15 @@ export default function Index({ data, brands, models, year, brandId, modelId }) 
 
             {/* Export Action Buttons */}
             <div className="grid grid-cols-2 gap-3 mb-5">
-                <a 
-                    href={route('reports.export.csv') + queryString} 
+                <a
+                    href={route('reports.export.csv') + queryString}
                     className={buttonVariants({ variant: 'outline', className: 'py-2.5 h-10 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white font-semibold text-xs flex items-center justify-center space-x-1.5 shadow-sm transition-all' })}
                 >
                     <FileSpreadsheet className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     <span>Export CSV</span>
                 </a>
-                <a 
-                    href={route('reports.export.pdf') + queryString} 
+                <a
+                    href={route('reports.export.pdf') + queryString}
                     className={buttonVariants({ variant: 'default', className: 'py-2.5 h-10 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center justify-center space-x-1.5 shadow-md shadow-indigo-950/20 transition-all active:scale-[0.98]' })}
                 >
                     <FileDown className="w-4 h-4 text-indigo-200" />
@@ -144,7 +144,7 @@ export default function Index({ data, brands, models, year, brandId, modelId }) 
             {/* Bar Chart */}
             <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm mb-6">
                 <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-5">Monthly Lead Breakdown</h3>
-                
+
                 {/* Chart Grid */}
                 <div className="flex items-end justify-between h-36 px-2 border-b border-slate-200 dark:border-slate-850 pb-2">
                     {monthlyDataArray.map((row, idx) => {
@@ -158,7 +158,7 @@ export default function Index({ data, brands, models, year, brandId, modelId }) 
                                     {/* Conversions Bar overlaid */}
                                     <div className="w-full bg-emerald-500 absolute bottom-0 left-0 transition-all duration-300 group-hover:bg-emerald-600" style={{ height: `${convPct}%` }}></div>
                                 </div>
-                                
+
                                 {/* Tooltip info */}
                                 <div className="absolute bg-white dark:bg-slate-950 text-slate-850 dark:text-white text-[9px] p-2 rounded-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-150 transform -translate-y-24 shadow-md font-semibold text-center z-10 w-24 border border-slate-200 dark:border-slate-800">
                                     <span className="block text-indigo-600 dark:text-indigo-200">{row.month_name}</span>
@@ -169,7 +169,7 @@ export default function Index({ data, brands, models, year, brandId, modelId }) 
                         );
                     })}
                 </div>
-                
+
                 {/* Chart Labels */}
                 <div className="flex justify-between px-2 pt-2 text-[8px] text-slate-500 font-bold uppercase tracking-wider">
                     {monthlyDataArray.map((row, idx) => (
@@ -195,7 +195,7 @@ export default function Index({ data, brands, models, year, brandId, modelId }) 
                 <div className="p-4 border-b border-slate-200 dark:border-slate-800">
                     <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Breakdown Details</h3>
                 </div>
-                <div className="divide-y divide-slate-200 dark:divide-slate-850/60 max-h-64 overflow-y-auto">
+                <div className="divide-y divide-slate-200 dark:divide-slate-800/80 max-h-64 overflow-y-auto">
                     {monthlyDataArray.map((row, idx) => (
                         <div key={idx} className="p-3.5 flex justify-between items-center text-xs">
                             <div>
@@ -206,7 +206,7 @@ export default function Index({ data, brands, models, year, brandId, modelId }) 
                                     <span>Sales: {row.conversions_count}</span>
                                 </div>
                             </div>
-                            
+
                             <div className="text-right">
                                 <span className="font-extrabold text-slate-800 dark:text-slate-100">{formatCurrency(row.sales_value)}</span>
                                 <span className="block text-[9px] text-indigo-650 dark:text-indigo-400 font-semibold mt-0.5">{formatPercent(row.conversion_rate)} CR</span>

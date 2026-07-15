@@ -17,7 +17,7 @@ export default function Create({ brands }) {
         email: '',
         brand_id: '',
         model_id: '',
-        source: 'walk-in',
+        source: '',
         notes: '',
     });
 
@@ -68,13 +68,13 @@ export default function Create({ brands }) {
             <div className="mb-6 flex items-center space-x-3">
                 <Link 
                     href={route('inquiries.index')} 
-                    className="p-2 rounded-xl bg-slate-900/60 border border-slate-800 shadow-sm text-slate-400 hover:text-slate-200 transition-colors flex items-center justify-center"
+                    className="p-2 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors flex items-center justify-center"
                 >
                     <ArrowLeft className="w-4 h-4" />
                 </Link>
                 <div>
-                    <h2 className="text-xl font-bold text-slate-100 tracking-tight">Create Inquiry</h2>
-                    <p className="text-xs text-slate-400 mt-0.5">Register a new customer lead</p>
+                    <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">Create Inquiry</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Register a new customer lead</p>
                 </div>
             </div>
 
@@ -149,7 +149,7 @@ export default function Create({ brands }) {
                                 <option value="">Select Model</option>
                                 {models.map((model) => (
                                     <option key={model.id} value={model.id}>
-                                        {model.name} ({model.variant}) - {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(model.on_road_price)}
+                                        {model.name} ({model.variant}) - {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(model.on_road_price)}
                                     </option>
                                 ))}
                             </Select>
@@ -164,6 +164,7 @@ export default function Create({ brands }) {
                                 value={data.source}
                                 onChange={(e) => setData('source', e.target.value)}
                             >
+                                <option value="">Select Source</option>
                                 <option value="walk-in">Walk-In</option>
                                 <option value="phone">Phone</option>
                                 <option value="online">Online</option>

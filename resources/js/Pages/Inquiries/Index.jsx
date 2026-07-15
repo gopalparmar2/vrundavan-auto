@@ -75,8 +75,8 @@ export default function Index({ inquiries, brands, search: initialSearch, status
                     <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">Inquiries</h2>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Manage customer pipeline</p>
                 </div>
-                <Link 
-                    href={route('inquiries.create')} 
+                <Link
+                    href={route('inquiries.create')}
                     className="py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-md shadow-indigo-950/20 flex items-center space-x-1.5 transition-all active:scale-[0.98]"
                 >
                     <Plus className="w-4 h-4" />
@@ -89,19 +89,19 @@ export default function Index({ inquiries, brands, search: initialSearch, status
                 <form onSubmit={applyFilters} className="space-y-3">
                     <div className="flex space-x-2">
                         <div className="relative flex-grow">
-                            <Input 
-                                type="text" 
+                            <Input
+                                type="text"
                                 value={search}
                                 onChange={handleSearchChange}
-                                placeholder="Search customer, phone, email..." 
+                                placeholder="Search customer, phone, email..."
                                 className="pl-9 text-xs"
                             />
                             <div className="absolute left-3 top-3.5 text-slate-500">
                                 <Search className="w-4 h-4" />
                             </div>
                         </div>
-                        <Button 
-                            type="button" 
+                        <Button
+                            type="button"
                             onClick={() => setFiltersOpen(!filtersOpen)}
                             variant="outline"
                             size="icon"
@@ -117,8 +117,8 @@ export default function Index({ inquiries, brands, search: initialSearch, status
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
                                     <Label className="mb-1 text-[10px] text-slate-500 dark:text-slate-400">Status</Label>
-                                    <Select 
-                                        value={status} 
+                                    <Select
+                                        value={status}
                                         onChange={(e) => setStatus(e.target.value)}
                                         className="text-xs h-10"
                                     >
@@ -131,8 +131,8 @@ export default function Index({ inquiries, brands, search: initialSearch, status
 
                                 <div>
                                     <Label className="mb-1 text-[10px] text-slate-500 dark:text-slate-400">Brand</Label>
-                                    <Select 
-                                        value={brandId} 
+                                    <Select
+                                        value={brandId}
                                         onChange={(e) => setBrandId(e.target.value)}
                                         className="text-xs h-10"
                                     >
@@ -147,8 +147,8 @@ export default function Index({ inquiries, brands, search: initialSearch, status
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
                                     <Label className="mb-1 text-[10px] text-slate-500 dark:text-slate-400">From Date</Label>
-                                    <DatePicker 
-                                        value={dateFrom} 
+                                    <DatePicker
+                                        value={dateFrom}
                                         onChange={(e) => setDateFrom(e.target.value)}
                                         placeholder="Select start date"
                                         className="text-xs h-10"
@@ -157,8 +157,8 @@ export default function Index({ inquiries, brands, search: initialSearch, status
 
                                 <div>
                                     <Label className="mb-1 text-[10px] text-slate-500 dark:text-slate-400">To Date</Label>
-                                    <DatePicker 
-                                        value={dateTo} 
+                                    <DatePicker
+                                        value={dateTo}
                                         onChange={(e) => setDateTo(e.target.value)}
                                         placeholder="Select end date"
                                         className="text-xs h-10"
@@ -179,9 +179,9 @@ export default function Index({ inquiries, brands, search: initialSearch, status
             <div className="space-y-3">
                 {inquiries.data && inquiries.data.length > 0 ? (
                     inquiries.data.map((inquiry) => (
-                        <Link 
-                            key={inquiry.id} 
-                            href={route('inquiries.show', inquiry.id)} 
+                        <Link
+                            key={inquiry.id}
+                            href={route('inquiries.show', inquiry.id)}
                             className="block p-3.5 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-sm hover:shadow-md transition-all duration-150"
                         >
                             <div className="flex justify-between items-start">
@@ -190,12 +190,12 @@ export default function Index({ inquiries, brands, search: initialSearch, status
                                     <span className="block text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">{inquiry.phone}</span>
                                 </div>
 
-                                <span className={`text-[9px] font-semibold px-2 py-0.5 rounded-full border ${statusColors[inquiry.status] || 'bg-slate-100 dark:bg-slate-900 text-slate-650 dark:text-slate-300 border-slate-200 dark:border-slate-800'} uppercase tracking-wider font-mono`}>
+                                <span className={`text-[9px] font-semibold px-2 py-0.5 rounded-full border ${statusColors[inquiry.status] || 'bg-slate-100 dark:bg-slate-900 text-slate-650 dark:text-slate-300 border-slate-200 dark:border-slate-800/80'} uppercase tracking-wider font-mono`}>
                                     {inquiry.status}
                                 </span>
                             </div>
 
-                            <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-850 flex justify-between items-center">
+                            <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center">
                                 <div className="flex items-center space-x-1.5">
                                     <span className="text-[10px] font-semibold text-slate-555 dark:text-slate-400">{inquiry.brand?.name}</span>
                                     <span className="text-slate-350 dark:text-slate-600 text-[10px]">•</span>
