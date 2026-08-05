@@ -7,8 +7,8 @@ export default function GuestLayout({ children }) {
             <div className="flex flex-col items-center mb-8">
                 {/* Large Logo */}
                 <Link href="/" className="flex flex-col items-center group">
-                    <div className="w-16 h-16 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-extrabold text-2xl shadow-xl shadow-indigo-500/25 mb-4 group-hover:scale-105 transition-transform duration-200">
-                        V
+                    <div className="w-16 h-16 rounded-2xl bg-slate-900 dark:bg-slate-800 border border-indigo-500/30 flex items-center justify-center shadow-xl shadow-indigo-500/25 mb-4 group-hover:scale-105 transition-transform duration-200 overflow-hidden">
+                        <img src="/assets/app_icon.png" alt="Vrundavan Auto" className="w-full h-full object-cover" />
                     </div>
                 </Link>
                 <h1 className="text-2xl font-bold tracking-tight">Vrundavan Auto</h1>
