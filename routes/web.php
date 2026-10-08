@@ -27,7 +27,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Brands CRUD
     Route::resource('brands', BrandController::class)->except(['show']);
-    // API route for dynamic models fetching
+    // API routes for dynamic form options
+    Route::get('api/brands', function() {
+        return response()->json(\App\Models\Brand::where('status', 'active')->orderBy('name')->get());
+    })->name('api.brands.index');
     Route::get('brands/{brand}/models', [InquiryController::class, 'getModelsForBrand'])->name('brands.models');
 
     // Models CRUD

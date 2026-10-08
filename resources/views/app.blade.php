@@ -32,15 +32,14 @@
 
         #app {
             width: 100%;
-            height: 100%;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: stretch;
+            flex-direction: column;
         }
     </style>
 </head>
 
-<body class="h-full antialiased bg-slate-950 text-slate-100 overflow-hidden">
+<body class="min-h-screen antialiased bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
     <!-- Initial Splash Loader -->
     <div id="initial-page-loader" style="position: fixed; inset: 0; z-index: 9999; background: #020617; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; transition: opacity 0.4s ease, visibility 0.4s ease;">
         <div style="width: 56px; height: 56px; border-radius: 18px; background: rgba(99, 102, 241, 0.15); border: 1.5px solid rgba(99, 102, 241, 0.3); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.3);">

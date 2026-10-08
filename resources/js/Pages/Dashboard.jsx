@@ -1,21 +1,25 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { Tag, Car, UserPlus, BarChart3, Inbox } from 'lucide-react';
+import { Tag, Car, UserPlus, BarChart3, Inbox, ArrowUpRight, TrendingUp, Clock, CheckCircle2 } from 'lucide-react';
 
 export default function Dashboard({ totalInquiriesMonth, totalSalesMonth, pendingEstimates, recentInquiries }) {
     const { auth } = usePage().props;
 
     const statusColors = {
-        'New': 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border-blue-100 dark:border-blue-900/30',
-        'Contacted': 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border-indigo-100 dark:border-indigo-900/30',
-        'Estimate Sent': 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border-amber-100 dark:border-amber-900/30',
-        'Negotiation': 'bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 border-purple-100 dark:border-purple-900/30',
-        'Converted': 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/30',
-        'Lost': 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-100 dark:border-rose-900/30',
+        'New': 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border-blue-200/80 dark:border-blue-900/30',
+        'Contacted': 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border-indigo-200/80 dark:border-indigo-900/30',
+        'Estimate Sent': 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border-amber-200/80 dark:border-amber-900/30',
+        'Negotiation': 'bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 border-purple-200/80 dark:border-purple-900/30',
+        'Converted': 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-200/80 dark:border-emerald-900/30',
+        'Lost': 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-200/80 dark:border-rose-900/30',
     };
 
-    // Simple diffForHumans fallback logic in JS
+    // Calculate conversion percentage
+    const conversionRate = totalInquiriesMonth > 0 
+        ? Math.round((totalSalesMonth / totalInquiriesMonth) * 100) 
+        : 0;
+
     const timeAgo = (dateStr) => {
         const date = new Date(dateStr);
         const now = new Date();
@@ -34,125 +38,262 @@ export default function Dashboard({ totalInquiriesMonth, totalSalesMonth, pendin
         <AuthenticatedLayout>
             <Head title="Dashboard" />
 
-            {/* Welcome Header */}
-            <div className="mb-6">
-                <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Showroom Management</span>
-                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight mt-0.5">Hello, {auth.user.name}!</h2>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Here is your dealership status for today.</p>
+            {/* Welcome Banner Header */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 bg-gradient-to-r from-indigo-50/80 via-white to-purple-50/60 dark:from-indigo-950/40 dark:via-slate-900/60 dark:to-slate-900/40 p-6 sm:p-8 rounded-3xl border border-slate-200/80 dark:border-indigo-500/20 shadow-xs">
+                <div>
+                    <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Showroom Management</span>
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight mt-1">
+                        Welcome back, {auth.user.name}!
+                    </h2>
+                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                        Here is an overview of your dealership's sales pipeline and active inquiries.
+                    </p>
+                </div>
+                <div className="flex items-center space-x-3">
+                    <Link
+                        href={route('inquiries.create')}
+                        className="flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-md transition-all active:scale-95"
+                    >
+                        <UserPlus className="w-4 h-4" />
+                        <span>Register Lead</span>
+                    </Link>
+                </div>
             </div>
 
-            {/* Quick Stats Cards (Grid layout) */}
-            <div className="grid grid-cols-3 gap-3.5 mb-6">
-                {/* Inquiries Stats */}
-                <div className="bg-gradient-to-br from-indigo-500/8 to-indigo-600/3 border border-indigo-500/20 p-3.5 rounded-2xl flex flex-col justify-between shadow-[0_4px_20px_rgba(99,102,241,0.04)] hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300">
-                    <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Inquiries</span>
-                    <div className="mt-3.5">
+            {/* 4-Column Quick Metrics Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+                {/* 1. Monthly Inquiries */}
+                <div className="bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 p-5 rounded-2xl shadow-xs hover:shadow-md transition-all duration-200">
+                    <div className="flex justify-between items-start">
+                        <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Inquiries</span>
+                        <div className="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+                            <UserPlus className="w-5 h-5" />
+                        </div>
+                    </div>
+                    <div className="mt-4">
                         <span className="text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">{totalInquiriesMonth}</span>
-                        <span className="block text-[9px] text-slate-500 dark:text-slate-400 font-semibold mt-1">This Month</span>
+                        <span className="block text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Registered this month</span>
                     </div>
                 </div>
 
-                {/* Conversions Stats */}
-                <div className="bg-gradient-to-br from-emerald-500/8 to-emerald-600/3 border border-emerald-500/20 p-3.5 rounded-2xl flex flex-col justify-between shadow-[0_4px_20px_rgba(16,185,129,0.04)] hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300">
-                    <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Converted</span>
-                    <div className="mt-3.5">
+                {/* 2. Monthly Converted Sales */}
+                <div className="bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 p-5 rounded-2xl shadow-xs hover:shadow-md transition-all duration-200">
+                    <div className="flex justify-between items-start">
+                        <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Converted Sales</span>
+                        <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400">
+                            <CheckCircle2 className="w-5 h-5" />
+                        </div>
+                    </div>
+                    <div className="mt-4">
                         <span className="text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">{totalSalesMonth}</span>
-                        <span className="block text-[9px] text-slate-500 dark:text-slate-400 font-semibold mt-1">Sales Month</span>
+                        <span className="block text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Sales closed this month</span>
                     </div>
                 </div>
 
-                {/* Pending Estimates Stats */}
-                <div className="bg-gradient-to-br from-amber-500/8 to-amber-600/3 border border-amber-500/20 p-3.5 rounded-2xl flex flex-col justify-between shadow-[0_4px_20px_rgba(245,158,11,0.04)] hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300">
-                    <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Pending</span>
-                    <div className="mt-3.5">
+                {/* 3. Pending Estimates */}
+                <div className="bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 p-5 rounded-2xl shadow-xs hover:shadow-md transition-all duration-200">
+                    <div className="flex justify-between items-start">
+                        <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Pending Estimates</span>
+                        <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400">
+                            <Clock className="w-5 h-5" />
+                        </div>
+                    </div>
+                    <div className="mt-4">
                         <span className="text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">{pendingEstimates}</span>
-                        <span className="block text-[9px] text-slate-500 dark:text-slate-400 font-semibold mt-1">Estimates</span>
+                        <span className="block text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Estimates awaiting response</span>
+                    </div>
+                </div>
+
+                {/* 4. Conversion Rate */}
+                <div className="bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 p-5 rounded-2xl shadow-xs hover:shadow-md transition-all duration-200">
+                    <div className="flex justify-between items-start">
+                        <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Conversion Rate</span>
+                        <div className="p-2.5 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400">
+                            <TrendingUp className="w-5 h-5" />
+                        </div>
+                    </div>
+                    <div className="mt-4">
+                        <span className="text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">{conversionRate}%</span>
+                        <span className="block text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Lead to sale ratio</span>
                     </div>
                 </div>
             </div>
 
-            {/* Quick Actions Section */}
-            <div className="mb-6">
-                <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3.5 pl-1">Quick Actions</h3>
-                <div className="grid grid-cols-2 gap-3.5">
-                    {/* Add Brand */}
-                    <Link href={route('brands.create')} className="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-indigo-500 active:scale-[0.96] transition-all duration-300 group">
-                        <div className="w-11 h-11 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2.5 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-200">
-                            <Tag className="w-5.5 h-5.5" />
-                        </div>
-                        <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-100 transition-colors">Add Brand</span>
-                    </Link>
-
-                    {/* Add Model */}
-                    <Link href={route('models.create')} className="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-indigo-500 active:scale-[0.96] transition-all duration-300 group">
-                        <div className="w-11 h-11 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2.5 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-200">
-                            <Car className="w-5.5 h-5.5" />
-                        </div>
-                        <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-100 transition-colors">Add Model</span>
-                    </Link>
-
-                    {/* Add Inquiry */}
-                    <Link href={route('inquiries.create')} className="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-[0_4px_12px_rgba(99,102,241,0.08)] hover:shadow-lg hover:border-indigo-500 active:scale-[0.96] transition-all duration-300 group">
-                        <div className="w-11 h-11 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2.5 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-200">
-                            <UserPlus className="w-5.5 h-5.5" />
-                        </div>
-                        <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-100 transition-colors">New Lead</span>
-                    </Link>
-
-                    {/* Sales Reports */}
-                    <Link href={route('reports.index')} className="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-[0_4px_12px_rgba(99,102,241,0.08)] hover:shadow-lg hover:border-indigo-500 active:scale-[0.96] transition-all duration-300 group">
-                        <div className="w-11 h-11 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2.5 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-200">
-                            <BarChart3 className="w-5.5 h-5.5" />
-                        </div>
-                        <span className="text-[11px] font-bold text-slate-800 dark:text-slate-100 group-hover:text-slate-950 dark:group-hover:text-white">Sales Reports</span>
-                    </Link>
-                </div>
-            </div>
-
-            {/* Recent Inquiries Section */}
-            <div>
-                <div className="flex justify-between items-center mb-3">
-                    <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Recent Inquiries</h3>
-                    <Link href={route('inquiries.index')} className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">View All</Link>
-                </div>
-
-                <div className="space-y-3">
-                    {recentInquiries.length > 0 ? (
-                        recentInquiries.map((inquiry) => (
-                            <Link
-                                key={inquiry.id}
-                                href={route('inquiries.show', inquiry.id)}
-                                className="block p-3.5 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-sm hover:shadow-md transition-all duration-150"
+            {/* Desktop 2-Column Split Body */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Left Column (2 Cols): Quick Action Cards + Recent Inquiries */}
+                <div className="lg:col-span-2 space-y-8">
+                    {/* Quick Actions Grid */}
+                    <div>
+                        <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">
+                            Quick Management Operations
+                        </h3>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            {/* Add Brand */}
+                            <Link 
+                                href={route('brands.create')} 
+                                className="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 rounded-2xl hover:border-indigo-500 dark:hover:border-indigo-500 shadow-xs hover:shadow-md transition-all duration-200 group text-center"
                             >
-                                <div className="flex justify-between items-start">
-                                    <div>
-                                        <span className="text-xs font-semibold text-slate-800 dark:text-slate-100">{inquiry.customer_name}</span>
-                                        <span className="block text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">{inquiry.phone}</span>
-                                    </div>
-
-                                    <span className={`text-[9px] font-semibold px-2 py-0.5 rounded-full border ${statusColors[inquiry.status] || 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800'} uppercase tracking-wider`}>
-                                        {inquiry.status}
-                                    </span>
+                                <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                    <Tag className="w-5 h-5" />
                                 </div>
-
-                                <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800/60 flex justify-between items-center">
-                                    <div className="flex items-center space-x-1.5">
-                                        <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">{inquiry.brand?.name}</span>
-                                        <span className="text-slate-350 dark:text-slate-600 text-[10px]">•</span>
-                                        <span className="text-[10px] text-slate-700 dark:text-slate-300 font-medium">{inquiry.model?.name} ({inquiry.model?.variant})</span>
-                                    </div>
-                                    <span className="text-[9px] text-slate-505 dark:text-slate-400 font-medium">{timeAgo(inquiry.created_at)}</span>
-                                </div>
+                                <span className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">Add Brand</span>
                             </Link>
-                        ))
-                    ) : (
-                        <div className="text-center py-8 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-sm">
-                            <div className="w-12 h-12 rounded-full bg-slate-50 dark:bg-slate-950/40 text-slate-400 dark:text-slate-500 flex items-center justify-center mx-auto mb-2.5">
-                                <Inbox className="w-6 h-6" />
-                            </div>
-                            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">No inquiries registered yet</p>
+
+                            {/* Add Model */}
+                            <Link 
+                                href={route('models.create')} 
+                                className="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 rounded-2xl hover:border-indigo-500 dark:hover:border-indigo-500 shadow-xs hover:shadow-md transition-all duration-200 group text-center"
+                            >
+                                <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                    <Car className="w-5 h-5" />
+                                </div>
+                                <span className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">Add Model</span>
+                            </Link>
+
+                            {/* Register Lead */}
+                            <Link 
+                                href={route('inquiries.create')} 
+                                className="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 rounded-2xl hover:border-indigo-500 dark:hover:border-indigo-500 shadow-xs hover:shadow-md transition-all duration-200 group text-center"
+                            >
+                                <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                    <UserPlus className="w-5 h-5" />
+                                </div>
+                                <span className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">New Lead</span>
+                            </Link>
+
+                            {/* Sales Reports */}
+                            <Link 
+                                href={route('reports.index')} 
+                                className="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 rounded-2xl hover:border-indigo-500 dark:hover:border-indigo-500 shadow-xs hover:shadow-md transition-all duration-200 group text-center"
+                            >
+                                <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                    <BarChart3 className="w-5 h-5" />
+                                </div>
+                                <span className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">Sales Reports</span>
+                            </Link>
                         </div>
-                    )}
+                    </div>
+
+                    {/* Recent Inquiries List Container */}
+                    <div className="bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-xs">
+                        <div className="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 className="text-base font-bold text-slate-800 dark:text-slate-100">Recent Customer Leads</h3>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Latest vehicle inquiries received at showroom</p>
+                            </div>
+                            <Link 
+                                href={route('inquiries.index')} 
+                                className="inline-flex items-center space-x-1 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+                            >
+                                <span>View All Pipeline</span>
+                                <ArrowUpRight className="w-4 h-4" />
+                            </Link>
+                        </div>
+
+                        <div className="space-y-3">
+                            {recentInquiries.length > 0 ? (
+                                recentInquiries.map((inquiry) => (
+                                    <Link
+                                        key={inquiry.id}
+                                        href={route('inquiries.show', inquiry.id)}
+                                        className="block p-4 bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/70 dark:border-slate-800 rounded-2xl hover:border-indigo-500/50 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 transition-all duration-200 group"
+                                    >
+                                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                                            <div>
+                                                <div className="flex items-center space-x-2">
+                                                    <span className="text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                                                        {inquiry.customer_name}
+                                                    </span>
+                                                    <span className={`text-[9px] font-semibold px-2.5 py-0.5 rounded-full border ${statusColors[inquiry.status] || 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300'} uppercase tracking-wider`}>
+                                                        {inquiry.status}
+                                                    </span>
+                                                </div>
+                                                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                                                    Phone: <span className="font-semibold text-slate-700 dark:text-slate-300">{inquiry.phone}</span>
+                                                </p>
+                                            </div>
+
+                                            <div className="text-left sm:text-right">
+                                                <div className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">
+                                                    {inquiry.brand?.name} — {inquiry.model?.name}
+                                                </div>
+                                                <span className="text-[10px] text-slate-400 font-medium">
+                                                    {timeAgo(inquiry.created_at)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))
+                            ) : (
+                                <div className="text-center py-12 bg-slate-50/50 dark:bg-slate-800/20 border border-dashed border-slate-200/80 dark:border-slate-800 rounded-2xl">
+                                    <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-3">
+                                        <Inbox className="w-6 h-6" />
+                                    </div>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">No inquiries registered yet</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Right Column (1 Col): Showroom Navigation & Activity Overview */}
+                <div className="space-y-6">
+                    {/* Quick Inventory Summary */}
+                    <div className="bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-xs">
+                        <h3 className="text-base font-bold text-slate-800 dark:text-slate-100 mb-1">Vehicle Catalog</h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">Quick links to inventory catalogs</p>
+
+                        <div className="space-y-3">
+                            <Link
+                                href={route('brands.index')}
+                                className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                            >
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+                                        <Tag className="w-4 h-4" />
+                                    </div>
+                                    <div>
+                                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">Manage Brands</span>
+                                        <span className="text-[10px] text-slate-500 dark:text-slate-400 block">View manufacturer partners</span>
+                                    </div>
+                                </div>
+                                <ArrowUpRight className="w-4 h-4 text-slate-400" />
+                            </Link>
+
+                            <Link
+                                href={route('models.index')}
+                                className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                            >
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+                                        <Car className="w-4 h-4" />
+                                    </div>
+                                    <div>
+                                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">Vehicle Models</span>
+                                        <span className="text-[10px] text-slate-500 dark:text-slate-400 block">Pricing & specifications</span>
+                                    </div>
+                                </div>
+                                <ArrowUpRight className="w-4 h-4 text-slate-400" />
+                            </Link>
+
+                            <Link
+                                href={route('reports.index')}
+                                className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                            >
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+                                        <BarChart3 className="w-4 h-4" />
+                                    </div>
+                                    <div>
+                                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">Performance Reports</span>
+                                        <span className="text-[10px] text-slate-500 dark:text-slate-400 block">Monthly sales breakdown</span>
+                                    </div>
+                                </div>
+                                <ArrowUpRight className="w-4 h-4 text-slate-400" />
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </AuthenticatedLayout>

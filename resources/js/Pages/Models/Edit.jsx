@@ -6,7 +6,7 @@ import { Input } from '@/Components/ui/input';
 import { Select } from '@/Components/ui/select';
 import { Card, CardContent } from '@/Components/ui/card';
 import { Label } from '@/Components/ui/label';
-import { ArrowLeft, Upload } from 'lucide-react';
+import { ArrowLeft, Upload, Loader2 } from 'lucide-react';
 import { validateForm, modelSchema } from '@/lib/validation';
 
 export default function Edit({ model, brands }) {
@@ -19,7 +19,7 @@ export default function Edit({ model, brands }) {
         fuel_type: model.fuel_type || '',
         transmission: model.transmission || '',
         image: null,
-        _method: 'PATCH', // Spoofing PATCH for file upload support in PHP multipart forms
+        _method: 'PATCH',
     });
 
     const submit = (e) => {
@@ -32,173 +32,192 @@ export default function Edit({ model, brands }) {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Edit Model" />
+            <Head title="Edit Vehicle Model" />
 
-            {/* Header */}
-            <div className="mb-6 flex items-center space-x-3">
-                <Link 
-                    href={route('models.index')} 
-                    className="p-2 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors flex items-center justify-center"
-                >
-                    <ArrowLeft className="w-4 h-4" />
-                </Link>
-                <div>
-                    <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">Edit Model</h2>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Modify vehicle model details</p>
+            <div className="w-full">
+                {/* Header */}
+                <div className="mb-6 flex items-center space-x-3">
+                    <Link 
+                        href={route('models.index')} 
+                        className="p-2.5 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-xs text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 transition-colors flex items-center justify-center"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                    </Link>
+                    <div>
+                        <h2 className="text-2xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">Edit Vehicle Model Details</h2>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Modify vehicle model specifications and showroom pricing</p>
+                    </div>
                 </div>
-            </div>
 
-            {/* Form Container */}
-            <Card>
-                <CardContent className="p-5">
-                    <form onSubmit={submit} className="space-y-4">
-                        {/* Brand */}
-                        <div>
-                            <Label htmlFor="brand_id" required>Brand</Label>
-                            <Select 
-                                id="brand_id" 
-                                value={data.brand_id}
-                                onChange={(e) => setData('brand_id', e.target.value)}
-                            >
-                                <option value="">Select Brand</option>
-                                {brands.map((brand) => (
-                                    <option key={brand.id} value={brand.id}>{brand.name}</option>
-                                ))}
-                            </Select>
-                            {errors.brand_id && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.brand_id}</div>}
-                        </div>
+                {/* Form Container */}
+                <Card className="rounded-3xl border-slate-200 dark:border-slate-800 shadow-xs">
+                    <CardContent className="p-6 sm:p-8">
+                        <form onSubmit={submit} className="space-y-6">
+                            {/* Grid 1: Brand & Model Name */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <Label htmlFor="brand_id" required>Manufacturer Brand</Label>
+                                    <Select 
+                                        id="brand_id" 
+                                        value={data.brand_id}
+                                        onChange={(e) => setData('brand_id', e.target.value)}
+                                        className="mt-1"
+                                    >
+                                        <option value="">Select Brand</option>
+                                        {brands.map((brand) => (
+                                            <option key={brand.id} value={brand.id}>{brand.name}</option>
+                                        ))}
+                                    </Select>
+                                    {errors.brand_id && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.brand_id}</div>}
+                                </div>
 
-                        {/* Model Name */}
-                        <div>
-                            <Label htmlFor="name" required>Model Name</Label>
-                            <Input 
-                                type="text" 
-                                id="name" 
-                                value={data.name}
-                                placeholder="e.g. Model Y"
-                                onChange={(e) => setData('name', e.target.value)}
-                            />
-                            {errors.name && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.name}</div>}
-                        </div>
+                                <div>
+                                    <Label htmlFor="name" required>Model Name</Label>
+                                    <Input 
+                                        type="text" 
+                                        id="name" 
+                                        value={data.name}
+                                        onChange={(e) => setData('name', e.target.value)}
+                                        placeholder="e.g. Fortuner" 
+                                        className="mt-1"
+                                    />
+                                    {errors.name && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.name}</div>}
+                                </div>
+                            </div>
 
-                        {/* Variant */}
-                        <div>
-                            <Label htmlFor="variant" required>Variant</Label>
-                            <Input 
-                                type="text" 
-                                id="variant" 
-                                value={data.variant}
-                                placeholder="e.g. Long Range AWD"
-                                onChange={(e) => setData('variant', e.target.value)}
-                            />
-                            {errors.variant && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.variant}</div>}
-                        </div>
+                            {/* Grid 2: Variant & Transmission */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <Label htmlFor="variant" required>Variant / Trim Name</Label>
+                                    <Input 
+                                        type="text" 
+                                        id="variant" 
+                                        value={data.variant}
+                                        onChange={(e) => setData('variant', e.target.value)}
+                                        placeholder="e.g. 2.8 4x4 AT" 
+                                        className="mt-1"
+                                    />
+                                    {errors.variant && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.variant}</div>}
+                                </div>
 
-                        {/* On-Road Price */}
-                        <div>
-                            <Label htmlFor="on_road_price" required>On-Road Price (₹)</Label>
-                            <Input 
-                                type="number" 
-                                step="0.01" 
-                                id="on_road_price" 
-                                value={data.on_road_price}
-                                placeholder="e.g. 54000"
-                                onChange={(e) => setData('on_road_price', e.target.value)}
-                            />
-                            {errors.on_road_price && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.on_road_price}</div>}
-                        </div>
+                                <div>
+                                    <Label htmlFor="transmission" required>Transmission</Label>
+                                    <Select 
+                                        id="transmission" 
+                                        value={data.transmission}
+                                        onChange={(e) => setData('transmission', e.target.value)}
+                                        className="mt-1"
+                                    >
+                                        <option value="">Select Transmission</option>
+                                        <option value="Manual">Manual</option>
+                                        <option value="Automatic">Automatic</option>
+                                    </Select>
+                                    {errors.transmission && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.transmission}</div>}
+                                </div>
+                            </div>
 
-                        {/* Ex-Showroom Price */}
-                        <div>
-                            <Label htmlFor="ex_showroom_price">Ex-Showroom Price (₹ - Optional)</Label>
-                            <Input 
-                                type="number" 
-                                step="0.01" 
-                                id="ex_showroom_price" 
-                                value={data.ex_showroom_price}
-                                placeholder="e.g. 48000"
-                                onChange={(e) => setData('ex_showroom_price', e.target.value)}
-                            />
-                            {errors.ex_showroom_price && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.ex_showroom_price}</div>}
-                        </div>
+                            {/* Grid 3: Fuel Type & On-Road Price */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <Label htmlFor="fuel_type" required>Fuel Type</Label>
+                                    <Select 
+                                        id="fuel_type" 
+                                        value={data.fuel_type}
+                                        onChange={(e) => setData('fuel_type', e.target.value)}
+                                        className="mt-1"
+                                    >
+                                        <option value="">Select Fuel Type</option>
+                                        {['Petrol', 'Diesel', 'Electric', 'Hybrid', 'CNG'].map((fuel) => (
+                                            <option key={fuel} value={fuel}>{fuel}</option>
+                                        ))}
+                                    </Select>
+                                    {errors.fuel_type && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.fuel_type}</div>}
+                                </div>
 
-                        {/* Fuel Type */}
-                        <div>
-                            <Label htmlFor="fuel_type" required>Fuel Type</Label>
-                            <Select 
-                                id="fuel_type" 
-                                value={data.fuel_type}
-                                onChange={(e) => setData('fuel_type', e.target.value)}
-                            >
-                                <option value="">Select Fuel Type</option>
-                                {['Petrol', 'Diesel', 'Electric', 'Hybrid', 'CNG'].map((fuel) => (
-                                    <option key={fuel} value={fuel}>{fuel}</option>
-                                ))}
-                            </Select>
-                            {errors.fuel_type && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.fuel_type}</div>}
-                        </div>
+                                <div>
+                                    <Label htmlFor="on_road_price" required>On-Road Price (₹)</Label>
+                                    <Input 
+                                        type="number" 
+                                        step="0.01" 
+                                        id="on_road_price" 
+                                        value={data.on_road_price}
+                                        onChange={(e) => setData('on_road_price', e.target.value)}
+                                        placeholder="e.g. 4500000" 
+                                        className="mt-1"
+                                    />
+                                    {errors.on_road_price && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.on_road_price}</div>}
+                                </div>
+                            </div>
 
-                        {/* Transmission */}
-                        <div>
-                            <Label htmlFor="transmission" required>Transmission</Label>
-                            <Select 
-                                id="transmission" 
-                                value={data.transmission}
-                                onChange={(e) => setData('transmission', e.target.value)}
-                            >
-                                <option value="">Select Transmission</option>
-                                <option value="Manual">Manual</option>
-                                <option value="Automatic">Automatic</option>
-                            </Select>
-                            {errors.transmission && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.transmission}</div>}
-                        </div>
-
-                        {/* Current Image Preview */}
-                        {model.image && (
+                            {/* Grid 4: Ex-Showroom Price */}
                             <div>
-                                <Label>Current Image</Label>
-                                <div className="w-24 h-24 rounded-xl bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-850 flex items-center justify-center overflow-hidden">
-                                    <img src={`/storage/${model.image}`} alt={model.name} className="object-cover w-full h-full" />
-                                </div>
+                                <Label htmlFor="ex_showroom_price">Ex-Showroom Price (₹ - Optional)</Label>
+                                <Input 
+                                    type="number" 
+                                    step="0.01" 
+                                    id="ex_showroom_price" 
+                                    value={data.ex_showroom_price}
+                                    onChange={(e) => setData('ex_showroom_price', e.target.value)}
+                                    placeholder="e.g. 3800000"
+                                    className="mt-1"
+                                />
+                                {errors.ex_showroom_price && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.ex_showroom_price}</div>}
                             </div>
-                        )}
 
-                        {/* Image Upload */}
-                        <div>
-                            <Label>Replace Model Image (Optional)</Label>
-                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-200 dark:border-slate-800 border-dashed rounded-xl hover:border-indigo-500 transition-colors relative">
-                                <div className="space-y-1 text-center">
-                                    <Upload className="mx-auto h-8 w-8 text-slate-400 dark:text-slate-555" />
-                                    <div className="flex text-xs text-slate-500 dark:text-slate-400 justify-center">
-                                        <label htmlFor="image" className="relative cursor-pointer rounded-md font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 focus-within:outline-none">
-                                            <span>{data.image ? data.image.name : 'Upload new image'}</span>
-                                            <input 
-                                                id="image" 
-                                                type="file" 
-                                                className="sr-only" 
-                                                onChange={(e) => setData('image', e.target.files[0])}
-                                            />
-                                        </label>
+                            {/* Current Image Preview */}
+                            {model.image && (
+                                <div>
+                                    <Label>Current Image Preview</Label>
+                                    <div className="mt-2 w-32 h-32 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 overflow-hidden flex items-center justify-center">
+                                        <img src={`/storage/${model.image}`} alt={model.name} className="object-cover w-full h-full" />
                                     </div>
-                                    <p className="text-[10px] text-slate-400 dark:text-slate-505">PNG, JPG up to 2MB</p>
                                 </div>
-                            </div>
-                            {errors.image && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.image}</div>}
-                        </div>
+                            )}
 
-                        {/* Submit Button */}
-                        <div className="pt-3">
-                            <Button 
-                                type="submit" 
-                                className="w-full"
-                                disabled={processing}
-                            >
-                                Update Model
-                            </Button>
-                        </div>
-                    </form>
-                </CardContent>
-            </Card>
+                            {/* Image Upload */}
+                            <div>
+                                <Label>Replace Model Image (Optional)</Label>
+                                <div className="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-200 dark:border-slate-800 border-dashed rounded-2xl hover:border-indigo-500 transition-colors relative">
+                                    <div className="space-y-1 text-center">
+                                        <Upload className="mx-auto h-8 w-8 text-slate-400 dark:text-slate-500" />
+                                        <div className="flex text-xs text-slate-500 dark:text-slate-400 justify-center">
+                                            <label htmlFor="image" className="relative cursor-pointer rounded-md font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 focus-within:outline-none">
+                                                <span>{data.image ? data.image.name : 'Upload replacement vehicle photo'}</span>
+                                                <input 
+                                                    id="image" 
+                                                    type="file" 
+                                                    className="sr-only" 
+                                                    onChange={(e) => setData('image', e.target.files[0])}
+                                                />
+                                            </label>
+                                        </div>
+                                        <p className="text-[10px] text-slate-400">PNG, JPG or WebP up to 2MB</p>
+                                    </div>
+                                </div>
+                                {errors.image && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.image}</div>}
+                            </div>
+
+                            {/* Action Footer: Proper Submit and Cancel buttons */}
+                            <div className="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-end space-x-3">
+                                <Link 
+                                    href={route('models.index')} 
+                                    className="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold transition-colors"
+                                >
+                                    Cancel
+                                </Link>
+                                <Button 
+                                    type="submit" 
+                                    disabled={processing}
+                                    className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-md flex items-center space-x-2 min-w-[140px] justify-center"
+                                >
+                                    {processing && <Loader2 className="w-4 h-4 animate-spin" />}
+                                    <span>{processing ? 'Updating...' : 'Update Model'}</span>
+                                </Button>
+                            </div>
+                        </form>
+                    </CardContent>
+                </Card>
+            </div>
         </AuthenticatedLayout>
     );
 }

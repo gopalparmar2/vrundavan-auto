@@ -1,7 +1,7 @@
 import React from 'react';
 import { Transition } from '@headlessui/react';
 import { Link, useForm, usePage } from '@inertiajs/react';
-import { User } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
@@ -30,9 +30,9 @@ export default function UpdateProfileInformation({
 
     return (
         <section className={className}>
-            <form onSubmit={submit} className="space-y-4">
+            <form onSubmit={submit} className="space-y-5">
                 <div>
-                    <Label htmlFor="name" required>Name</Label>
+                    <Label htmlFor="name" required>Display Name</Label>
 
                     <Input
                         id="name"
@@ -42,9 +42,10 @@ export default function UpdateProfileInformation({
                         autoFocus
                         autoComplete="name"
                         placeholder="Enter your name"
+                        className="mt-1"
                     />
 
-                    {errors.name && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.name}</div>}
+                    {errors.name && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.name}</div>}
                 </div>
 
                 <div>
@@ -58,13 +59,14 @@ export default function UpdateProfileInformation({
                         autoComplete="username"
                         placeholder="Enter your email address"
                         disabled
+                        className="mt-1 bg-slate-50 dark:bg-slate-950/60 cursor-not-allowed"
                     />
 
-                    {errors.email && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.email}</div>}
+                    {errors.email && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.email}</div>}
                 </div>
 
                 {mustVerifyEmail && user.email_verified_at === null && (
-                    <div className="p-3.5 bg-amber-50/50 border border-amber-100 rounded-xl">
+                    <div className="p-3.5 bg-amber-50/50 border border-amber-100 rounded-2xl">
                         <p className="text-xs text-amber-800">
                             Your email address is unverified.
                             <Link
@@ -85,9 +87,21 @@ export default function UpdateProfileInformation({
                     </div>
                 )}
 
-                <div className="flex items-center gap-4 pt-2">
-                    <Button type="submit" disabled={processing} className="w-full">
-                        Save Changes
+                {/* Action Footer: Proper Submit and Cancel buttons */}
+                <div className="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-end space-x-3">
+                    <Link
+                        href={route('profile.edit')}
+                        className="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold transition-colors"
+                    >
+                        Cancel
+                    </Link>
+                    <Button 
+                        type="submit" 
+                        disabled={processing}
+                        className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-md flex items-center space-x-2 min-w-[130px] justify-center"
+                    >
+                        {processing && <Loader2 className="w-4 h-4 animate-spin" />}
+                        <span>{processing ? 'Saving...' : 'Save Changes'}</span>
                     </Button>
 
                     <Transition

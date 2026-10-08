@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Transition } from '@headlessui/react';
-import { useForm } from '@inertiajs/react';
-import { Lock } from 'lucide-react';
+import { useForm, Link } from '@inertiajs/react';
+import { Loader2 } from 'lucide-react';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
@@ -38,12 +38,12 @@ export default function UpdatePasswordForm({ className = '' }) {
             onError: (errors) => {
                 if (errors.password) {
                     reset('password', 'password_confirmation');
-                    passwordInput.current.focus();
+                    passwordInput.current?.focus();
                 }
 
                 if (errors.current_password) {
                     reset('current_password');
-                    currentPasswordInput.current.focus();
+                    currentPasswordInput.current?.focus();
                 }
             },
         });
@@ -51,7 +51,7 @@ export default function UpdatePasswordForm({ className = '' }) {
 
     return (
         <section className={className}>
-            <form onSubmit={updatePassword} className="space-y-4">
+            <form onSubmit={updatePassword} className="space-y-5">
                 <div>
                     <Label htmlFor="current_password" required>Current Password</Label>
 
@@ -65,9 +65,10 @@ export default function UpdatePasswordForm({ className = '' }) {
                         type="password"
                         autoComplete="current-password"
                         placeholder="Enter current password"
+                        className="mt-1"
                     />
 
-                    {errors.current_password && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.current_password}</div>}
+                    {errors.current_password && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.current_password}</div>}
                 </div>
 
                 <div>
@@ -81,9 +82,10 @@ export default function UpdatePasswordForm({ className = '' }) {
                         type="password"
                         autoComplete="new-password"
                         placeholder="Enter new password"
+                        className="mt-1"
                     />
 
-                    {errors.password && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.password}</div>}
+                    {errors.password && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.password}</div>}
                 </div>
 
                 <div>
@@ -98,14 +100,27 @@ export default function UpdatePasswordForm({ className = '' }) {
                         type="password"
                         autoComplete="new-password"
                         placeholder="Confirm new password"
+                        className="mt-1"
                     />
 
-                    {errors.password_confirmation && <div className="text-rose-500 text-[10px] mt-1 font-medium">{errors.password_confirmation}</div>}
+                    {errors.password_confirmation && <div className="text-rose-500 text-xs mt-1 font-medium">{errors.password_confirmation}</div>}
                 </div>
 
-                <div className="flex items-center gap-4 pt-2">
-                    <Button type="submit" disabled={processing} className="w-full">
-                        Save Password
+                {/* Action Footer: Proper Submit and Cancel buttons */}
+                <div className="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-end space-x-3">
+                    <Link
+                        href={route('profile.edit')}
+                        className="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold transition-colors"
+                    >
+                        Cancel
+                    </Link>
+                    <Button 
+                        type="submit" 
+                        disabled={processing}
+                        className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-md flex items-center space-x-2 min-w-[140px] justify-center"
+                    >
+                        {processing && <Loader2 className="w-4 h-4 animate-spin" />}
+                        <span>{processing ? 'Saving...' : 'Save Password'}</span>
                     </Button>
 
                     <Transition
